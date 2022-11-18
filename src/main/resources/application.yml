@@ -1,1 +1,21 @@
+spring:
+  main:
+    banner-mode: "OFF"
+  output:
+    ansi:
+      enabled: DETECT
 
+logging:
+  level:
+    root: INFO
+    space.munin.sensing.infrastructure.configuration: DEBUG
+  file:
+    name: "log/inditex-test.log"
+  logback:
+    rollingpolicy:
+      total-size-cap: 4 GB
+      max-file-size: 100 MB
+      max-history: 7
+
+server:
+  port: 8081
