@@ -1,3 +1,5 @@
 - Test dates are missing month and year, I'm assuming **June 2020** since that is where intervals apply.
 - Updating **START_DATE** and **END_DATE** database types to long. Those dates do not have a timezone, so I'm assuming **CET/UTC+1** time.
+- I'm using **ZonedDateTime** at the infrastructure level because I think dealing with dates is part of the test, normally I would just use long epoch timestamps in milliseconds and let the client transform it to whatever it needs, which it's probably what it's going to do anyway.
 - Tried using **RestControllerAdvice** just to test it, but does not seem to work, probably because I'm using a router function instead controller annotations. I usually use a **DefaultErrorAttributes** GlobalErrorMapper anyway so used it here.
+- **Price** could be a **record**, but I don't usually create entities as records because they should become mutable as the application progresses.

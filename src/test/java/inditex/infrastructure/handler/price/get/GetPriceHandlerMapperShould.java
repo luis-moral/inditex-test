@@ -76,7 +76,8 @@ public class GetPriceHandlerMapperShould {
                 1668863977000L,
                 3,
                 new BigDecimal("25.5"),
-                Currency.getInstance("EUR")
+                Currency.getInstance("EUR"),
+                1
             );
 
         GetPriceResponse expected =

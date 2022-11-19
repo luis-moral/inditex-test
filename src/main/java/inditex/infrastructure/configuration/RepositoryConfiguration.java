@@ -1,15 +1,15 @@
 package inditex.infrastructure.configuration;
 
-import inditex.domain.price.GetPriceService;
 import inditex.domain.price.PriceRepository;
+import inditex.infrastructure.repository.R2dbcPriceRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ServiceConfiguration {
+public class RepositoryConfiguration {
 
     @Bean
-    public GetPriceService getPriceService(PriceRepository priceRepository) {
-        return new GetPriceService(priceRepository);
+    public PriceRepository priceRepository() {
+        return new R2dbcPriceRepository();
     }
 }

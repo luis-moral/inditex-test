@@ -1,18 +1,23 @@
 package inditex.domain.price;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import java.math.BigDecimal;
 import java.util.Currency;
-import java.util.Objects;
 
+@EqualsAndHashCode
+@ToString
 public class Price {
 
-    private long productId;
-    private int brandId;
-    private long startDate;
-    private long endDate;
-    private int priceRateId;
-    private BigDecimal price;
-    private Currency currency;
+    private final long productId;
+    private final int brandId;
+    private final long startDate;
+    private final long endDate;
+    private final int priceRateId;
+    private final BigDecimal price;
+    private final Currency currency;
+    private final int priority;
 
     public Price(
         long productId,
@@ -21,7 +26,8 @@ public class Price {
         long endDate,
         int priceRateId,
         BigDecimal price,
-        Currency currency
+        Currency currency,
+        int priority
     ) {
         this.productId = productId;
         this.brandId = brandId;
@@ -30,6 +36,7 @@ public class Price {
         this.priceRateId = priceRateId;
         this.price = price;
         this.currency = currency;
+        this.priority = priority;
     }
 
     public long productId() {
@@ -60,16 +67,7 @@ public class Price {
         return currency;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Price price1 = (Price) o;
-        return productId == price1.productId && brandId == price1.brandId && startDate == price1.startDate && endDate == price1.endDate && priceRateId == price1.priceRateId && Objects.equals(price, price1.price) && Objects.equals(currency, price1.currency);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(productId, brandId, startDate, endDate, priceRateId, price, currency);
+    public int priority() {
+        return priority;
     }
 }
