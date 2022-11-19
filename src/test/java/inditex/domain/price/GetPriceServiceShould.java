@@ -35,12 +35,30 @@ public class GetPriceServiceShould {
     }
 
     @Test public void
-    return_the_price_for_a_product_in_a_time_period() {
+    return_the_price_for_a_filtered_product() {
         assertPriceFor(filter(14, 10), List.of(FIRST_PRICE), FIRST_PRICE);
         assertPriceFor(filter(14, 16), List.of(FIRST_PRICE, SECOND_PRICE), SECOND_PRICE);
         assertPriceFor(filter(14, 21), List.of(FIRST_PRICE), FIRST_PRICE);
         assertPriceFor(filter(15, 10), List.of(FIRST_PRICE, THIRD_PRICE), THIRD_PRICE);
         assertPriceFor(filter(16, 21), List.of(FIRST_PRICE, FOURTH_PRICE), FOURTH_PRICE);
+    }
+
+    @Test public void
+    return_empty_if_no_products_match() {
+        GetPriceFilter filter =
+            new GetPriceFilter(25, 7, ZonedDateTime.of(2020, 6, 14, 16, 0, 0, 0, ZoneId.of("CET")).toInstant().toEpochMilli());
+
+        Mockito
+            .when(priceRepository.prices(filter))
+            .thenReturn(Flux.empty());
+
+        StepVerifier
+            .create(getPriceService.price(filter))
+            .verifyComplete();
+
+        Mockito
+            .verify(priceRepository, Mockito.times(1))
+            .prices(filter);
     }
 
     private void assertPriceFor(GetPriceFilter filter, List<Price> repositoryPrices, Price expected) {
@@ -52,6 +70,10 @@ public class GetPriceServiceShould {
             .create(getPriceService.price(filter))
             .expectNext(expected)
             .verifyComplete();
+
+        Mockito
+            .verify(priceRepository, Mockito.times(1))
+            .prices(filter);
     }
 
     private GetPriceFilter filter(int dayOfMonth, int hour) {
