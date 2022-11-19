@@ -5,19 +5,39 @@ import inditex.domain.price.Price;
 import inditex.infrastructure.util.validator.RequestParameterValidator;
 import org.springframework.web.reactive.function.server.ServerRequest;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 public class GetPriceHandlerMapper {
 
-    private RequestParameterValidator validator;
+    private final ZoneId zoneId;
+    private final RequestParameterValidator validator;
 
-    public GetPriceHandlerMapper(RequestParameterValidator validator) {
+    public GetPriceHandlerMapper(ZoneId zoneId, RequestParameterValidator validator) {
+        this.zoneId = zoneId;
         this.validator = validator;
     }
 
     public GetPriceFilter toGetPriceFilter(ServerRequest serverRequest) {
-        throw new UnsupportedOperationException();
+        return
+            new GetPriceFilter(
+                validator.mandatoryProductId(serverRequest.queryParam("productId")),
+                validator.mandatoryBrandId(serverRequest.queryParam("brandId")),
+                validator.mandatoryDate(serverRequest.queryParam("date"))
+            );
     }
 
     public GetPriceResponse toGetPriceResponse(Price price) {
-        throw new UnsupportedOperationException();
+        return
+            new GetPriceResponse(
+                price.productId(),
+                price.brandId(),
+                LocalDateTime.ofInstant(Instant.ofEpochMilli(price.startDate()), zoneId),
+                LocalDateTime.ofInstant(Instant.ofEpochMilli(price.endDate()), zoneId),
+                price.priceRateId(),
+                price.price(),
+                price.currency().getCurrencyCode()
+            );
     }
 }

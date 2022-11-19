@@ -5,13 +5,16 @@ import inditex.infrastructure.util.validator.RequestParameterValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.ZoneId;
+
 @Configuration
 public class MapperConfiguration {
 
     @Bean
     public GetPriceHandlerMapper getPriceHandlerMapper(
+        ZoneId applicationZoneId,
         RequestParameterValidator requestParameterValidator
     ) {
-        return new GetPriceHandlerMapper(requestParameterValidator);
+        return new GetPriceHandlerMapper(applicationZoneId, requestParameterValidator);
     }
 }

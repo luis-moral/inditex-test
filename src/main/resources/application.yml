@@ -17,6 +17,10 @@ logging:
       max-file-size: 100 MB
       max-history: 7
 
+application:
+  date-time:
+    zoneId: "CET"
+
 server:
   port: 8081
 
