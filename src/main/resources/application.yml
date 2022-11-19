@@ -8,7 +8,7 @@ spring:
 logging:
   level:
     root: INFO
-    space.munin.sensing.infrastructure.configuration: DEBUG
+    inditex.infrastructure.configuration: DEBUG
   file:
     name: "log/inditex-test.log"
   logback:
@@ -19,3 +19,14 @@ logging:
 
 server:
   port: 8081
+
+endpoint:
+  status:
+    path: "/status"
+
+  public:
+    v1:
+      path: "/public/v1"
+      price:
+        path:
+          base: "${endpoint.public.v1.path}/price"

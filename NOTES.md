@@ -1,0 +1,2 @@
+- Test dates are missing month and year, I'm assuming **June 2020** since that is where intervals apply.
+- Updating **START_DATE** and **END_DATE** database types to long. Those dates do not have a timezone, so I'm assuming **CET/UTC+1** time.

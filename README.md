@@ -1,3 +1,13 @@
+## Technical Test
+
+- [Requirements](TECHNICAL_TEST.md)
+
+- [OpenApi definition](doc/open-api/price.yml)
+
+- [Notes](NOTES.md)
+
+---
+
 ## Run Build
 
 ```
