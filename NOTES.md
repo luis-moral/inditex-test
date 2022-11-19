@@ -1,2 +1,3 @@
 - Test dates are missing month and year, I'm assuming **June 2020** since that is where intervals apply.
 - Updating **START_DATE** and **END_DATE** database types to long. Those dates do not have a timezone, so I'm assuming **CET/UTC+1** time.
+- Tried using **RestControllerAdvice** just to test it, but does not seem to work, probably because I'm using a router function instead controller annotations. I usually use a **DefaultErrorAttributes** GlobalErrorMapper anyway so used it here.

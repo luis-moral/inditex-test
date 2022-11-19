@@ -1,7 +1,7 @@
 package inditex;
 
-import inditex.infrastructure.Application;
 import inditex.test.TestUtils;
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -9,12 +9,15 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @ActiveProfiles(profiles = "test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -54,6 +57,30 @@ class PriceFeature {
 
 	}
 
+	@Test public void
+	error_when_missing_parameters() {
+		webClient
+			.get()
+			.uri(priceEndpoint)
+			.exchange()
+			.expectStatus()
+			.isEqualTo(HttpStatus.BAD_REQUEST)
+			.expectBody(HashMap.class)
+			.consumeWith(response ->
+				{
+					Map body = response.getResponseBody();
+
+					Assertions
+						.assertThat(body.get("status"))
+						.isEqualTo(400);
+
+					Assertions
+						.assertThat(body.get("error"))
+						.isEqualTo("Parameter [productId] is mandatory");
+				}
+			);
+	}
+
 	private void assertPriceFor(PriceFilter parameters, String expected) {
 		webClient
 			.get()
@@ -85,7 +112,6 @@ class PriceFeature {
 				}
 			);
 	}
-
 
 	private record PriceFilter(long productId, int brandId, ZonedDateTime date) {
 	}
