@@ -22,9 +22,9 @@ public class GetPriceHandlerMapper {
     public GetPriceFilter toGetPriceFilter(ServerRequest serverRequest) {
         return
             new GetPriceFilter(
-                validator.mandatoryProductId(serverRequest.queryParam("productId")),
-                validator.mandatoryBrandId(serverRequest.queryParam("brandId")),
-                validator.mandatoryDate(serverRequest.queryParam("date"))
+                validator.mandatoryLong(serverRequest.queryParam("productId"), "productId"),
+                validator.mandatoryInteger(serverRequest.queryParam("brandId"), "brandId"),
+                validator.mandatoryDate(serverRequest.queryParam("date"), "date")
             );
     }
 

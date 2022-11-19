@@ -42,13 +42,13 @@ public class GetPriceHandlerMapperShould {
             );
 
         Mockito
-            .when(validator.mandatoryProductId(Mockito.any()))
+            .when(validator.mandatoryLong(Mockito.any(), Mockito.eq("productId")))
             .thenReturn(1500L);
         Mockito
-            .when(validator.mandatoryBrandId(Mockito.any()))
+            .when(validator.mandatoryInteger(Mockito.any(), Mockito.eq("brandId")))
             .thenReturn(5);
         Mockito
-            .when(validator.mandatoryDate(Mockito.any()))
+            .when(validator.mandatoryDate(Mockito.any(), Mockito.eq("date")))
             .thenReturn(1668863977000L);
 
         Assertions
@@ -57,13 +57,13 @@ public class GetPriceHandlerMapperShould {
 
         Mockito
             .verify(validator, Mockito.times(1))
-            .mandatoryProductId(Mockito.any());
+            .mandatoryLong(Mockito.any(), Mockito.eq("productId"));
         Mockito
             .verify(validator, Mockito.times(1))
-            .mandatoryBrandId(Mockito.any());
+            .mandatoryInteger(Mockito.any(), Mockito.eq("brandId"));
         Mockito
             .verify(validator, Mockito.times(1))
-            .mandatoryDate(Mockito.any());
+            .mandatoryDate(Mockito.any(), Mockito.eq("date"));
     }
 
     @Test public void

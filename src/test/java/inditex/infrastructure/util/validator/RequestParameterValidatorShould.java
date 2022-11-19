@@ -27,16 +27,16 @@ public class RequestParameterValidatorShould {
         Optional<String> empty = Optional.empty();
 
         Assertions
-            .assertThat(validator.mandatoryProductId(valid))
+            .assertThat(validator.mandatoryLong(valid, "productId"))
             .isEqualTo(1500);
 
         Assertions
-            .assertThatThrownBy(() -> validator.mandatoryProductId(invalid))
+            .assertThatThrownBy(() -> validator.mandatoryLong(invalid, "productId"))
             .isInstanceOf(InvalidParameterException.class)
             .hasMessage("Parameter [productId] must be a valid number");
 
         Assertions
-            .assertThatThrownBy(() -> validator.mandatoryProductId(empty))
+            .assertThatThrownBy(() -> validator.mandatoryLong(empty, "productId"))
             .isInstanceOf(MandatoryParameterException.class)
             .hasMessage("Parameter [productId] is mandatory");
     }
@@ -48,16 +48,16 @@ public class RequestParameterValidatorShould {
         Optional<String> empty = Optional.empty();
 
         Assertions
-            .assertThat(validator.mandatoryBrandId(valid))
+            .assertThat(validator.mandatoryInteger(valid, "brandId"))
             .isEqualTo(1500);
 
         Assertions
-            .assertThatThrownBy(() -> validator.mandatoryBrandId(invalid))
+            .assertThatThrownBy(() -> validator.mandatoryInteger(invalid, "brandId"))
             .isInstanceOf(InvalidParameterException.class)
             .hasMessage("Parameter [brandId] must be a valid number");
 
         Assertions
-            .assertThatThrownBy(() -> validator.mandatoryBrandId(empty))
+            .assertThatThrownBy(() -> validator.mandatoryInteger(empty, "brandId"))
             .isInstanceOf(MandatoryParameterException.class)
             .hasMessage("Parameter [brandId] is mandatory");
     }
@@ -71,16 +71,16 @@ public class RequestParameterValidatorShould {
         Optional<String> empty = Optional.empty();
 
         Assertions
-            .assertThat(validator.mandatoryDate(valid))
+            .assertThat(validator.mandatoryDate(valid, "date"))
             .isEqualTo(1668853977000L);
 
         Assertions
-            .assertThatThrownBy(() -> validator.mandatoryDate(invalid))
+            .assertThatThrownBy(() -> validator.mandatoryDate(invalid, "date"))
             .isInstanceOf(InvalidParameterException.class)
             .hasMessage("Parameter [date] must be a valid date");
 
         Assertions
-            .assertThatThrownBy(() -> validator.mandatoryDate(empty))
+            .assertThatThrownBy(() -> validator.mandatoryDate(empty, "date"))
             .isInstanceOf(MandatoryParameterException.class)
             .hasMessage("Parameter [date] is mandatory");
     }

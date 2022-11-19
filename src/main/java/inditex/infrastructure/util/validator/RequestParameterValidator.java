@@ -16,22 +16,22 @@ public class RequestParameterValidator {
         this.zoneId = zoneId;
     }
 
-    public long mandatoryProductId(Optional<String> productId) {
-        String value = productId.orElseThrow(() -> new MandatoryParameterException("productId"));
+    public long mandatoryLong(Optional<String> optionalValue, String parameterName) {
+        String value = optionalValue.orElseThrow(() -> new MandatoryParameterException(parameterName));
 
-        return validateLong(value, "productId", "a valid number");
+        return validateLong(value, parameterName, "a valid number");
     }
 
-    public int mandatoryBrandId(Optional<String> brandId) {
-        String value = brandId.orElseThrow(() -> new MandatoryParameterException("brandId"));
+    public int mandatoryInteger(Optional<String> optionalValue, String parameterName) {
+        String value = optionalValue.orElseThrow(() -> new MandatoryParameterException(parameterName));
 
-        return validateInteger(value, "brandId", "a valid number");
+        return validateInteger(value, parameterName, "a valid number");
     }
 
-    public long mandatoryDate(Optional<String> date) {
-        String value = date.orElseThrow(() -> new MandatoryParameterException("date"));
+    public long mandatoryDate(Optional<String> optionalValue, String parameterName) {
+        String value = optionalValue.orElseThrow(() -> new MandatoryParameterException(parameterName));
 
-        return validateDate(value, "date", "a valid date");
+        return validateDate(value, parameterName, "a valid date");
     }
 
     private int validateInteger(String value, String errorParameter, String errorExpected) {
