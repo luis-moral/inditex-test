@@ -1,7 +1,7 @@
 package inditex.infrastructure.component;
 
 import inditex.domain.exception.DomainException;
-import inditex.infrastructure.util.validator.expection.ValidationException;
+import inditex.infrastructure.util.validator.exception.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.error.ErrorAttributeOptions;

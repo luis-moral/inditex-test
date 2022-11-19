@@ -70,6 +70,7 @@ public class GetPriceHandlerMapperShould {
     map_price_to_get_price_response() {
         Price price =
             new Price(
+                1,
                 1500,
                 5,
                 1668853977000L,

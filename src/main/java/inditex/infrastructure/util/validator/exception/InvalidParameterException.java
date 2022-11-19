@@ -1,4 +1,4 @@
-package inditex.infrastructure.util.validator.expection;
+package inditex.infrastructure.util.validator.exception;
 
 public class InvalidParameterException extends ValidationException {
 

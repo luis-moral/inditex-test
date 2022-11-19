@@ -3,3 +3,4 @@
 - I'm using **ZonedDateTime** at the infrastructure level because I think dealing with dates is part of the test, normally I would just use long epoch timestamps in milliseconds and let the client transform it to whatever it needs, which it's probably what it's going to do anyway.
 - Tried using **RestControllerAdvice** just to test it, but does not seem to work, probably because I'm using a router function instead controller annotations. I usually use a **DefaultErrorAttributes** GlobalErrorMapper anyway so used it here.
 - **Price** could be a **record**, but I don't usually create entities as records because they should become mutable as the application progresses.
+- Flyway doest not directly support R2DBC (https://github.com/flyway/flyway/issues/2502) so I had to add a **RunMigrationsOnStarted** class to start the migrations.

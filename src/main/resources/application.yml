@@ -4,6 +4,16 @@ spring:
   output:
     ansi:
       enabled: DETECT
+  r2dbc:
+    url: "r2dbc:h2:mem:////inditextdb;DB_CLOSE_DELAY=-1;"
+    username: sa
+    password:
+  flyway:
+    url: "jdbc:h2:mem:////inditextdb;DB_CLOSE_DELAY=-1;"
+    user: ${spring.r2dbc.username}
+    password: ${spring.r2dbc.password}
+    locations: "classpath:db/migration"
+    run-migrations: true
 
 logging:
   level:

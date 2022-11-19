@@ -1,7 +1,7 @@
 package inditex.infrastructure.util.validator;
 
-import inditex.infrastructure.util.validator.expection.InvalidParameterException;
-import inditex.infrastructure.util.validator.expection.MandatoryParameterException;
+import inditex.infrastructure.util.validator.exception.InvalidParameterException;
+import inditex.infrastructure.util.validator.exception.MandatoryParameterException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

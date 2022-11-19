@@ -10,6 +10,7 @@ import java.util.Currency;
 @ToString
 public class Price {
 
+    private final long id;
     private final long productId;
     private final int brandId;
     private final long startDate;
@@ -20,6 +21,7 @@ public class Price {
     private final int priority;
 
     public Price(
+        long id,
         long productId,
         int brandId,
         long startDate,
@@ -29,6 +31,7 @@ public class Price {
         Currency currency,
         int priority
     ) {
+        this.id = id;
         this.productId = productId;
         this.brandId = brandId;
         this.startDate = startDate;
@@ -37,6 +40,10 @@ public class Price {
         this.price = price;
         this.currency = currency;
         this.priority = priority;
+    }
+
+    public long id() {
+        return id;
     }
 
     public long productId() {

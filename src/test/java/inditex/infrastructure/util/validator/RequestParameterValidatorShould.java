@@ -1,7 +1,7 @@
 package inditex.infrastructure.util.validator;
 
-import inditex.infrastructure.util.validator.expection.InvalidParameterException;
-import inditex.infrastructure.util.validator.expection.MandatoryParameterException;
+import inditex.infrastructure.util.validator.exception.InvalidParameterException;
+import inditex.infrastructure.util.validator.exception.MandatoryParameterException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

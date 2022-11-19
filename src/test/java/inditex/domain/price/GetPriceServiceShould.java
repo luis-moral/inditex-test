@@ -15,13 +15,13 @@ import java.util.List;
 public class GetPriceServiceShould {
 
     private final static Price FIRST_PRICE =
-        price(35455, 1, "2020-06-14T00:00:00+01", "2020-12-31T23:59:59+01", 1, "35.5", 0);
+        price(1, 35455, 1, "2020-06-14T00:00:00+01", "2020-12-31T23:59:59+01", 1, "35.5", 0);
     private final static Price SECOND_PRICE =
-        price(35455, 1, "2020-06-14T00:00:00+01", "2020-12-31T23:59:59+01", 1, "35.5", 1);
+        price(2, 35455, 1, "2020-06-14T00:00:00+01", "2020-12-31T23:59:59+01", 1, "35.5", 1);
     private final static Price THIRD_PRICE =
-        price(35455, 1, "2020-06-14T00:00:00+01", "2020-12-31T23:59:59+01", 1, "35.5", 1);
+        price(3, 35455, 1, "2020-06-14T00:00:00+01", "2020-12-31T23:59:59+01", 1, "35.5", 1);
     private final static Price FOURTH_PRICE =
-        price(35455, 1, "2020-06-14T00:00:00+01", "2020-12-31T23:59:59+01", 1, "35.5", 1);
+        price(4, 35455, 1, "2020-06-14T00:00:00+01", "2020-12-31T23:59:59+01", 1, "35.5", 1);
 
     private PriceRepository priceRepository;
 
@@ -86,6 +86,7 @@ public class GetPriceServiceShould {
     }
 
     private static Price price(
+        long id,
         long productId,
         int brandId,
         String startDate,
@@ -96,6 +97,7 @@ public class GetPriceServiceShould {
     ) {
         return
             new Price(
+                id,
                 productId,
                 brandId,
                 ZonedDateTime.parse(startDate).toInstant().toEpochMilli(),
