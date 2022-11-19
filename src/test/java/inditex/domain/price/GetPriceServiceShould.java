@@ -7,6 +7,7 @@ import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Currency;
@@ -14,14 +15,16 @@ import java.util.List;
 
 public class GetPriceServiceShould {
 
+    private final static ZoneId ZONE_ID = ZoneId.of("CET");
+
     private final static Price FIRST_PRICE =
-        price(1, 35455, 1, "2020-06-14T00:00:00+01", "2020-12-31T23:59:59+01", 1, "35.5", 0);
+        price(1, 35455, 1, "2020-06-14T00:00:00", "2020-12-31T23:59:59", "35.50", 0);
     private final static Price SECOND_PRICE =
-        price(2, 35455, 1, "2020-06-14T00:00:00+01", "2020-12-31T23:59:59+01", 1, "35.5", 1);
+        price(2, 35455, 1, "2020-06-14T15:00:00", "2020-06-14T18:30:00", "25.45", 1);
     private final static Price THIRD_PRICE =
-        price(3, 35455, 1, "2020-06-14T00:00:00+01", "2020-12-31T23:59:59+01", 1, "35.5", 1);
+        price(3, 35455, 1, "2020-06-15T00:00:00", "2020-06-15T11:00:00", "30.50", 1);
     private final static Price FOURTH_PRICE =
-        price(4, 35455, 1, "2020-06-14T00:00:00+01", "2020-12-31T23:59:59+01", 1, "35.5", 1);
+        price(4, 35455, 1, "2020-06-15T16:00:00", "2020-12-31T23:59:59", "38.95", 1);
 
     private PriceRepository priceRepository;
 
@@ -46,7 +49,7 @@ public class GetPriceServiceShould {
     @Test public void
     return_empty_if_no_products_match() {
         GetPriceFilter filter =
-            new GetPriceFilter(25, 7, ZonedDateTime.of(2020, 6, 14, 16, 0, 0, 0, ZoneId.of("CET")).toInstant().toEpochMilli());
+            new GetPriceFilter(25, 7, ZonedDateTime.of(2020, 6, 14, 16, 0, 0, 0, ZONE_ID).toInstant().toEpochMilli());
 
         Mockito
             .when(priceRepository.prices(filter))
@@ -81,7 +84,7 @@ public class GetPriceServiceShould {
             new GetPriceFilter(
                 35455,
                 1,
-                ZonedDateTime.of(2020, 6, dayOfMonth, hour, 0, 0, 0, ZoneId.of("CET")).toInstant().toEpochMilli()
+                ZonedDateTime.of(2020, 6, dayOfMonth, hour, 0, 0, 0, ZONE_ID).toInstant().toEpochMilli()
             );
     }
 
@@ -91,7 +94,6 @@ public class GetPriceServiceShould {
         int brandId,
         String startDate,
         String endDate,
-        int priceRateId,
         String price,
         int priority
     ) {
@@ -100,9 +102,8 @@ public class GetPriceServiceShould {
                 id,
                 productId,
                 brandId,
-                ZonedDateTime.parse(startDate).toInstant().toEpochMilli(),
-                ZonedDateTime.parse(endDate).toInstant().toEpochMilli(),
-                priceRateId,
+                LocalDateTime.parse(startDate).atZone(ZONE_ID).toInstant().toEpochMilli(),
+                LocalDateTime.parse(endDate).atZone(ZONE_ID).toInstant().toEpochMilli(),
                 new BigDecimal(price),
                 Currency.getInstance("EUR"),
                 priority

@@ -31,11 +31,11 @@ public class GetPriceHandlerMapper {
     public GetPriceResponse toGetPriceResponse(Price price) {
         return
             new GetPriceResponse(
+                price.id(),
                 price.productId(),
                 price.brandId(),
                 LocalDateTime.ofInstant(Instant.ofEpochMilli(price.startDate()), zoneId),
                 LocalDateTime.ofInstant(Instant.ofEpochMilli(price.endDate()), zoneId),
-                price.priceRateId(),
                 price.price(),
                 price.currency().getCurrencyCode()
             );

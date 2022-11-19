@@ -21,6 +21,6 @@ public class MigrationRunner {
                 .load();
         flyway.migrate();
 
-        logger.info("Migrations completed");
+        logger.info("Migrations completed for [{}]", url);
     }
 }

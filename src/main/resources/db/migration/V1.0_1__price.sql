@@ -4,8 +4,7 @@ CREATE TABLE price (
     brand_id INT NOT NULL,
     start_date BIGINT NOT NULL,
     end_date BIGINT NOT NULL,
-    price_rate_id INT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
-    currency VARCHAR(5) NOT NULL,
+    currency VARCHAR(3) NOT NULL,
     priority INT NOT NULL
 );

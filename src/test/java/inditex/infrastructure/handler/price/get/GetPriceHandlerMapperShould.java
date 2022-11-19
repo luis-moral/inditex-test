@@ -75,19 +75,18 @@ public class GetPriceHandlerMapperShould {
                 5,
                 1668853977000L,
                 1668863977000L,
-                3,
                 new BigDecimal("25.5"),
                 Currency.getInstance("EUR"),
-                1
+                0
             );
 
         GetPriceResponse expected =
             new GetPriceResponse(
+                1,
                 1500,
                 5,
                 LocalDateTime.ofInstant(Instant.ofEpochMilli(1668853977000L), zoneId),
                 LocalDateTime.ofInstant(Instant.ofEpochMilli(1668863977000L), zoneId),
-                3,
                 new BigDecimal("25.5"),
                 "EUR"
             );

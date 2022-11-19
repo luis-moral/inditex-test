@@ -15,7 +15,6 @@ public class Price {
     private final int brandId;
     private final long startDate;
     private final long endDate;
-    private final int priceRateId;
     private final BigDecimal price;
     private final Currency currency;
     private final int priority;
@@ -26,7 +25,6 @@ public class Price {
         int brandId,
         long startDate,
         long endDate,
-        int priceRateId,
         BigDecimal price,
         Currency currency,
         int priority
@@ -36,7 +34,6 @@ public class Price {
         this.brandId = brandId;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.priceRateId = priceRateId;
         this.price = price;
         this.currency = currency;
         this.priority = priority;
@@ -60,10 +57,6 @@ public class Price {
 
     public long endDate() {
         return endDate;
-    }
-
-    public int priceRateId() {
-        return priceRateId;
     }
 
     public BigDecimal price() {
