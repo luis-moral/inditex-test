@@ -9,7 +9,7 @@ import java.time.ZoneId;
 @Configuration
 public class SystemConfiguration {
 
-    @Value("${application.date-time.zoneId}")
+    @Value("${application.date-time.zone-id}")
     private String applicationDateTimeZoneId;
 
     @Bean

@@ -10,7 +10,7 @@ Updated **START_DATE** and **END_DATE** database types to long. Those dates do n
 I'm using **ZonedDateTime** at the infrastructure level because I think dealing with dates is part of the test, normally I would just use long epoch timestamps in milliseconds and let the client transform it to whatever it needs, which it's probably what it's going to do anyway.
 
 I'm using **CET** as time zone for dates, so it's easier to compare the values with the data given in the test, 
-I would usually just use **UTC** time if dealing with dates. You could change the property `application.date-time.zoneId: "CET"` to `application.date-time.zoneId: "UTC"` and the responses would be in **UTC** time.
+I would usually just use **UTC** time if dealing with dates. You could change the property `application.date-time.zone-id: "CET"` to `application.date-time.zone-id: "UTC"` and the responses would be in **UTC** time.
 
 Some dates are summer time +02:00 and others are not +01:00. 
 

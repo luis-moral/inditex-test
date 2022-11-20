@@ -29,7 +29,7 @@ logging:
 
 application:
   date-time:
-    zoneId: "CET"
+    zone-id: "CET"
 
 server:
   port: 8081
