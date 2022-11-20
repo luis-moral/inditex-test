@@ -16,6 +16,7 @@ Some dates are summer time +02:00 and others are not +01:00.
 
 ## Notes
 
+- Changes **PRICE_LIST** database field to **ID** 
 - Tried using **RestControllerAdvice** just to test it, but does not seem to work, probably because I'm using a router function instead controller annotations. I usually use a **DefaultErrorAttributes** GlobalErrorMapper anyway so I used it here.
 - **Price** could be a **record**, but I don't usually create entities as records because they should become mutable as the application progresses.
 - Flyway doest not directly support R2DBC (https://github.com/flyway/flyway/issues/2502) so I had to add a **RunMigrationsOnStarted** class to start the migrations.

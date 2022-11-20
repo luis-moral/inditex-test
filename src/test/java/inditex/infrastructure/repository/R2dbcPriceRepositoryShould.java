@@ -49,15 +49,14 @@ public class R2dbcPriceRepositoryShould {
                 ZonedDateTime.of(2020, 6, 14, 16, 0, 0, 0, ZONE_ID).toInstant().toEpochMilli()
             );
 
-        List<Price> prices =
-            priceRepository
-                .prices(filter)
-                .collectList()
-                .block();
-
-        Assertions
-            .assertThat(prices)
-            .containsExactlyInAnyOrder(FIRST_PRICE, SECOND_PRICE);
+        StepVerifier
+            .create(priceRepository.prices(filter).collectList())
+            .assertNext(prices ->
+                Assertions
+                    .assertThat(prices)
+                    .containsExactlyInAnyOrder(FIRST_PRICE, SECOND_PRICE)
+            )
+            .verifyComplete();
     }
 
     @Test public void

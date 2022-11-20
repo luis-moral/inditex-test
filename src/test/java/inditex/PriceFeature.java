@@ -25,7 +25,7 @@ import java.util.Map;
 @ContextConfiguration(
 	classes = { Application.class }
 )
-class PriceFeature {
+public class PriceFeature {
 
 	@Value("${endpoint.public.v1.price.path.base}")
 	private String priceEndpoint;

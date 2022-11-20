@@ -25,7 +25,7 @@ public class GetPriceHandlerMapper {
             new GetPriceFilter(
                 validator.mandatoryLong(serverRequest.queryParam("productId"), "productId"),
                 validator.mandatoryInteger(serverRequest.queryParam("brandId"), "brandId"),
-                validator.mandatoryDate(serverRequest.queryParam("date").map(UrlEncoder::decode), "date")
+                validator.mandatoryDate(serverRequest.queryParam("date").map(UrlEncoder::decode).map(value -> value.replace(" ", "+")), "date")
             );
     }
 
