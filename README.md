@@ -32,7 +32,7 @@
 ./mvnw clean spring-boot:run
 ```
 
-You can test the endpoint in any browser at http://localhost:8081/publc/v1/price, using [OpenApi definition](doc/open-api/price.yml) or the [JMeter test](src/test/jmeter/inditex-test.jmx) 
+You can test the endpoint in any browser at http://localhost:8081/publc/v1/price, using the [OpenApi definition](doc/open-api/price.yml) or the [JMeter test](src/test/jmeter/inditex-test.jmx). 
 
 Example request:
 
