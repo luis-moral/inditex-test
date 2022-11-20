@@ -1,10 +1,8 @@
 package inditex.infrastructure.component;
 
 import inditex.infrastructure.util.database.MigrationRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -25,9 +23,6 @@ public class RunMigrationsOnStarted {
 
     @Value("${flyway.run-migrations:true}")
     private boolean runMigrations;
-
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @EventListener(ApplicationStartedEvent.class)
     private void initialize() {

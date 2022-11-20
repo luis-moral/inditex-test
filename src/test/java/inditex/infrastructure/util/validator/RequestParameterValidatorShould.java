@@ -7,8 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 public class RequestParameterValidatorShould {
@@ -17,7 +17,7 @@ public class RequestParameterValidatorShould {
 
     @BeforeEach
     public void setUp() {
-        validator = new RequestParameterValidator(ZoneId.of("CET"));
+        validator = new RequestParameterValidator();
     }
 
     @Test public void
@@ -64,9 +64,9 @@ public class RequestParameterValidatorShould {
 
     @Test public void
     validate_mandatory_date() {
-        LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(1668853977000L), ZoneId.of("CET"));
+        ZonedDateTime date = ZonedDateTime.ofInstant(Instant.ofEpochMilli(1668853977000L), ZoneId.of("CET"));
 
-        Optional<String> valid = Optional.of(date.toString());
+        Optional<String> valid = Optional.of(date.toOffsetDateTime().toString());
         Optional<String> invalid = Optional.of("Date");
         Optional<String> empty = Optional.empty();
 
@@ -77,7 +77,7 @@ public class RequestParameterValidatorShould {
         Assertions
             .assertThatThrownBy(() -> validator.mandatoryDate(invalid, "date"))
             .isInstanceOf(InvalidParameterException.class)
-            .hasMessage("Parameter [date] must be a valid date");
+            .hasMessage("Parameter [date] must be a valid ISO-8601 date");
 
         Assertions
             .assertThatThrownBy(() -> validator.mandatoryDate(empty, "date"))

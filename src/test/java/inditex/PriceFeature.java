@@ -1,5 +1,6 @@
 package inditex;
 
+import inditex.infrastructure.util.url.UrlEncoder;
 import inditex.test.TestUtils;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
@@ -89,7 +90,7 @@ class PriceFeature {
 					.path(priceEndpoint)
 					.queryParam("productId", parameters.productId())
 					.queryParam("brandId", parameters.brandId())
-					.queryParam("date", parameters.date().toInstant().toEpochMilli())
+					.queryParam("date", UrlEncoder.encode(parameters.date().toOffsetDateTime().toString()))
 					.build()
 			)
 			.exchange()

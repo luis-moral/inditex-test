@@ -3,18 +3,11 @@ package inditex.infrastructure.util.validator;
 import inditex.infrastructure.util.validator.exception.InvalidParameterException;
 import inditex.infrastructure.util.validator.exception.MandatoryParameterException;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
 public class RequestParameterValidator {
-
-    private final ZoneId zoneId;
-
-    public RequestParameterValidator(ZoneId zoneId) {
-        this.zoneId = zoneId;
-    }
 
     public long mandatoryLong(Optional<String> optionalValue, String parameterName) {
         String value = optionalValue.orElseThrow(() -> new MandatoryParameterException(parameterName));
@@ -31,7 +24,7 @@ public class RequestParameterValidator {
     public long mandatoryDate(Optional<String> optionalValue, String parameterName) {
         String value = optionalValue.orElseThrow(() -> new MandatoryParameterException(parameterName));
 
-        return validateDate(value, parameterName, "a valid date");
+        return validateDate(value, parameterName, "a valid ISO-8601 date");
     }
 
     private int validateInteger(String value, String errorParameter, String errorExpected) {
@@ -54,7 +47,7 @@ public class RequestParameterValidator {
 
     private long validateDate(String value, String errorParameter, String errorExpected) {
         try {
-            return LocalDateTime.parse(value).atZone(zoneId).toInstant().toEpochMilli();
+            return ZonedDateTime.parse(value).toInstant().toEpochMilli();
         }
         catch (DateTimeParseException e) {
             throw new InvalidParameterException(errorParameter, errorExpected);

@@ -11,8 +11,8 @@ import org.springframework.mock.web.reactive.function.server.MockServerRequest;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Currency;
 
 public class GetPriceHandlerMapperShould {
@@ -85,8 +85,8 @@ public class GetPriceHandlerMapperShould {
                 1,
                 1500,
                 5,
-                LocalDateTime.ofInstant(Instant.ofEpochMilli(1668853977000L), zoneId),
-                LocalDateTime.ofInstant(Instant.ofEpochMilli(1668863977000L), zoneId),
+                ZonedDateTime.ofInstant(Instant.ofEpochMilli(1668853977000L), zoneId),
+                ZonedDateTime.ofInstant(Instant.ofEpochMilli(1668863977000L), zoneId),
                 new BigDecimal("25.5"),
                 "EUR"
             );

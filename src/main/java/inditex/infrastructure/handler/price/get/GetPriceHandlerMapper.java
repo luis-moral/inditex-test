@@ -2,12 +2,13 @@ package inditex.infrastructure.handler.price.get;
 
 import inditex.domain.price.GetPriceFilter;
 import inditex.domain.price.Price;
+import inditex.infrastructure.util.url.UrlEncoder;
 import inditex.infrastructure.util.validator.RequestParameterValidator;
 import org.springframework.web.reactive.function.server.ServerRequest;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public class GetPriceHandlerMapper {
 
@@ -24,7 +25,7 @@ public class GetPriceHandlerMapper {
             new GetPriceFilter(
                 validator.mandatoryLong(serverRequest.queryParam("productId"), "productId"),
                 validator.mandatoryInteger(serverRequest.queryParam("brandId"), "brandId"),
-                validator.mandatoryDate(serverRequest.queryParam("date"), "date")
+                validator.mandatoryDate(serverRequest.queryParam("date").map(UrlEncoder::decode), "date")
             );
     }
 
@@ -34,8 +35,8 @@ public class GetPriceHandlerMapper {
                 price.id(),
                 price.productId(),
                 price.brandId(),
-                LocalDateTime.ofInstant(Instant.ofEpochMilli(price.startDate()), zoneId),
-                LocalDateTime.ofInstant(Instant.ofEpochMilli(price.endDate()), zoneId),
+                ZonedDateTime.ofInstant(Instant.ofEpochMilli(price.startDate()), zoneId),
+                ZonedDateTime.ofInstant(Instant.ofEpochMilli(price.endDate()), zoneId),
                 price.price(),
                 price.currency().getCurrencyCode()
             );
