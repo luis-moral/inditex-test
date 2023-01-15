@@ -19,6 +19,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @ActiveProfiles(profiles = "test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -55,14 +56,70 @@ public class PriceFeature {
 			new PriceFilter(35455, 1, ZonedDateTime.of(2020, 6, 16, 21, 0, 0, 0, ZoneId.of("CET"))),
 			"feature/price/response/expected_16_06_2020-21_00.json"
 		);
-
 	}
 
 	@Test public void
-	error_when_missing_parameters() {
+	error_when_missing_parameter() {
+		assertError(
+			new PriceFilter(null, "1", "2:4"),
+			400,
+			"Parameter [productId] is mandatory"
+		);
+		assertError(
+			new PriceFilter("35455", null, "2:4"),
+			400,
+			"Parameter [brandId] is mandatory"
+		);
+		assertError(
+			new PriceFilter("35455", "1", null),
+			400,
+			"Parameter [date] is mandatory"
+		);
+	}
+
+	@Test public void
+	error_when_invalid_parameter() {
+		assertError(
+			new PriceFilter("invalidProductId", "1", "2023-01-15T04:17:15Z"),
+			400,
+			"Parameter [productId] must be a valid number"
+		);
+		assertError(
+			new PriceFilter("35455", "invalidBrandId", "2023-01-15T04:17:15Z"),
+			400,
+			"Parameter [brandId] must be a valid number"
+		);
+		assertError(
+			new PriceFilter("35455", "1", "invalidDate"),
+			400,
+			"Parameter [date] must be a valid ISO-8601 date"
+		);
+	}
+
+	private void assertError(PriceFilter parameters, int errorCode, String errorMessage) {
 		webClient
 			.get()
-			.uri(priceEndpoint)
+			.uri(builder -> {
+				builder.path(priceEndpoint);
+
+				Optional
+					.ofNullable(parameters)
+					.ifPresent(value -> {
+						Optional
+							.ofNullable(parameters.productId())
+							.ifPresent(productId -> builder.queryParam("productId", productId));
+
+						Optional
+							.ofNullable(parameters.brandId())
+							.ifPresent(brandId -> builder.queryParam("brandId", brandId));
+
+						Optional
+							.ofNullable(parameters.date())
+							.ifPresent(date -> builder.queryParam("date", date));
+					});
+
+				return builder.build();
+			})
 			.exchange()
 			.expectStatus()
 			.isEqualTo(HttpStatus.BAD_REQUEST)
@@ -73,11 +130,11 @@ public class PriceFeature {
 
 					Assertions
 						.assertThat(body.get("status"))
-						.isEqualTo(400);
+						.isEqualTo(errorCode);
 
 					Assertions
 						.assertThat(body.get("error"))
-						.isEqualTo("Parameter [productId] is mandatory");
+						.isEqualTo(errorMessage);
 				}
 			);
 	}
@@ -90,7 +147,7 @@ public class PriceFeature {
 					.path(priceEndpoint)
 					.queryParam("productId", parameters.productId())
 					.queryParam("brandId", parameters.brandId())
-					.queryParam("date", UrlEncoder.encode(parameters.date().toOffsetDateTime().toString()))
+					.queryParam("date", UrlEncoder.encode(parameters.date()))
 					.build()
 			)
 			.exchange()
@@ -114,6 +171,10 @@ public class PriceFeature {
 			);
 	}
 
-	private record PriceFilter(long productId, int brandId, ZonedDateTime date) {
+	private record PriceFilter(String productId, String brandId, String date) {
+
+		private PriceFilter(long productId, int brandId, ZonedDateTime date) {
+			this(Long.toString(productId), Integer.toString(brandId), date.toOffsetDateTime().toString());
+		}
 	}
 }
